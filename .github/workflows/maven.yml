@@ -11,6 +11,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      security-events: write
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -31,11 +35,11 @@ jobs:
     - name: Start Spring Boot Application
       run: mvn spring-boot:run &
       env:
-        SPRING_PROFILES_ACTIVE: test # Set appropriate profile if needed
-      continue-on-error: true # Allow the process to run in the background
+        SPRING_PROFILES_ACTIVE: test  # Set profile if needed
+      continue-on-error: true  # Allow it to run in the background
 
     - name: Wait for Application Startup
-      run: sleep 20 # Adjust time based on app startup speed
+      run: sleep 20  # Adjust based on app startup time
 
     - name: Run Integration Tests (if any)
       run: mvn verify
